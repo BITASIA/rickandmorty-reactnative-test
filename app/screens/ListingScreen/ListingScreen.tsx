@@ -7,11 +7,13 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import {Character} from '../../services/models';
+import {Character, RootStackParamList} from '../../services/models';
 import {fetchCharacters} from '../../services/api';
 import ItemCard from './ItemCard';
 
-export const ListingScreen = () => {
+
+
+export const ListingScreen = ({ navigation }:any) => {
   const [characterList, setCharacterList] = React.useState<Character[]>([]);
   const [page, setPage] = useState<number>(1);
   const [isBottomLoading, setIsBottomLoading] = useState<boolean>(false);
@@ -38,6 +40,8 @@ export const ListingScreen = () => {
     }
   };
 
+  
+
   const onEndReached = async () => {
     try {
       if (isBottomLoading || page === totalPages) return;
@@ -55,6 +59,11 @@ export const ListingScreen = () => {
     }
   };
 
+  const onCardClick = (item: Character) => {
+    navigation.navigate('DetailScreen', { item });
+  };
+
+
   return (
     <ImageBackground
       source={require('../../../assets/images/rickandmorty.jpg')}
@@ -64,7 +73,7 @@ export const ListingScreen = () => {
         <Text style={styles.title}>Listing Screen</Text>
         <FlatList
           data={characterList}
-          renderItem={ItemCard}
+          renderItem={(props)=> <ItemCard {...props} onCardClick={onCardClick}/>}
           onEndReached={onEndReached}
           keyExtractor={item => item?.id?.toString()}
         />

@@ -28,3 +28,9 @@ export type CharactersFetchResult = {
   };
   results: Character[];
 };
+
+
+export type RootStackParamList = {
+  ListingScreen: undefined; 
+  DetailsScreen: { character: Character} ; 
+}

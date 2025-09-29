@@ -1,14 +1,15 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React, {useMemo} from 'react';
 import {Character} from '../../services/models';
+import {} from '@react-navigation/native-stack';
 
 interface ItemCardProps {
   item: Character;
   index: number;
+  onCardClick: (item: Character) => void;
 }
 
-const ItemCard = ({item, index}: ItemCardProps) => {
-
+const ItemCard = ({item, index, onCardClick}: ItemCardProps) => {
   const statusColor = () => {
     if (item?.status === 'Alive') {
       return 'green';
@@ -20,7 +21,10 @@ const ItemCard = ({item, index}: ItemCardProps) => {
   };
 
   return (
-    <View
+    <Pressable
+      onPress={() => {
+        onCardClick(item);
+      }}
       style={{
         width: '100%',
         backgroundColor: 'white',
@@ -50,7 +54,7 @@ const ItemCard = ({item, index}: ItemCardProps) => {
           backgroundColor: statusColor(),
           borderRadius: 100,
         }}></View>
-    </View>
+    </Pressable>
   );
 };
 
